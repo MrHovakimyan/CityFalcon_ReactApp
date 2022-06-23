@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import FetchData from "../api/FetchData";
 import dataMarkUp from "../utils/dataMarkUp";
 

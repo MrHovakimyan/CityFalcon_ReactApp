@@ -1,0 +1,12 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+:root {
+  --white: #e0e0e0;
+  --white-two: #e2e2e2;
+}
+@import url(./_header.scss);
+@import url(./_filters.scss);
+@import url(./_stories.scss);

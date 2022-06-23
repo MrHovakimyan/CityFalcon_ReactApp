@@ -1,0 +1,57 @@
+.dataMarkUp {
+  width: 928px;
+  height: 75px;
+  margin: 20px 30px 7px 70px;
+  padding: 0 20px 0 0;
+  border-radius: 3px;
+  border: solid 1px var(--white);
+  background-color: #fff;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  &-title {
+    width: 459px;
+    height: 21px;
+    margin: 12px 286px 12px 20px;
+    font-family: Lato;
+    font-size: 16px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    color: #000;
+  }
+  &-img {
+    width: 18px;
+    height: 18px;
+    margin: 6px 10px 12px 20px;
+  }
+  &-domainNameTime {
+    width: 114px;
+    height: 15px;
+    font-family: Lato;
+    font-size: 12px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: center;
+    color: #666;
+  }
+  &-domainInfo {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  &-score-wrpr {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
