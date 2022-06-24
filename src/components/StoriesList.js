@@ -1,12 +1,14 @@
 import React from "react";
-import FetchData from "../api/FetchData";
-import dataMarkUp from "../utils/dataMarkUp";
+import DataMarkUp from "../utils/DataMarkUp";
 
-export default function StoriesList() {
-  let storiesData = FetchData();
+export default function StoriesList({ storiesData }) {
   return (
     <div className="stories-content">
-      <div>{storiesData.map((el) => dataMarkUp(el))}</div>
+      <div>
+        {storiesData.map((el) => (
+          <DataMarkUp data={el} key={el.id} />
+        ))}
+      </div>
     </div>
   );
 }
