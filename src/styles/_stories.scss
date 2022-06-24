@@ -1,6 +1,6 @@
 .dataMarkUp {
   width: 928px;
-  height: 75px;
+  height: auto;
   margin: 20px 30px 7px 70px;
   padding: 0 20px 0 0;
   border-radius: 3px;
@@ -24,11 +24,27 @@
     letter-spacing: normal;
     color: #000;
   }
+
+  &-description {
+    width: 614px;
+    height: 69px;
+    margin: 10px 131px 15px 20px;
+    font-family: Lato;
+    font-size: 15px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.53;
+    letter-spacing: normal;
+    color: #292929;
+  }
+
   &-img {
     width: 18px;
     height: 18px;
     margin: 6px 10px 12px 20px;
   }
+
   &-domainNameTime {
     width: 114px;
     height: 15px;
@@ -42,16 +58,51 @@
     text-align: center;
     color: #666;
   }
+
   &-domainInfo {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
   }
+
+  &-info-bookmark {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+
+    &-thumbs {
+      width: 40px;
+      height: 40px;
+    }
+    &-btn {
+      background-color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+  }
+
   &-score-wrpr {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+
+    &-score {
+      width: 40px;
+      height: 30px;
+      padding: 3px 3px;
+      border-radius: 5px;
+      border: solid 1px var(--greeny-blue);
+      background-color: #fff;
+      text-align: center;
+    }
+
+    &-scoreBtn {
+      margin: 10px;
+      background-color: #fff;
+      border: none;
+      cursor: pointer;
+    }
   }
 }
