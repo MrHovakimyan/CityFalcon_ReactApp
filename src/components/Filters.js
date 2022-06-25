@@ -3,7 +3,7 @@ import refreshIcon from "../media/refreshIcon.png";
 import filterIcon from "../media/filterIcon.png";
 import DropDown from "../utils/DropDown";
 
-export default function Filters({ onRefreshClick, onFilterClick, refresh, order, language }) {
+export default function Filters({ onRefreshClick, onFilterClick }) {
   const [isFilterOn, setIsFilterOn] = useState(false);
 
   return (
@@ -26,7 +26,7 @@ export default function Filters({ onRefreshClick, onFilterClick, refresh, order,
       </div>
       {isFilterOn && (
         <div className="filters-content-options">
-          <DropDown refresh={refresh} order={order} language={language} />
+          <DropDown onFilterClick={onFilterClick} />
         </div>
       )}
     </div>

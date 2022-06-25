@@ -1,13 +1,36 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { orderFilters, languages, refreshIntervals } from "./Constants";
 
-export default function DropDown({ refresh, order, language }) {
+export default function DropDown({ onFilterClick }) {
   const [isRefreshActive, setIsRefreshActive] = useState(false);
   const [isOrderActive, setIsOrderActive] = useState(false);
   const [isLangActive, setIsLangActive] = useState(false);
 
-  const [selectedRefresh, setSelectedRefresh] = useState("Select one");
-  const [selectedOrder, setSelectedOrder] = useState("Select one");
-  const [selectedLanguage, setSelectedLanguage] = useState("Select one");
+  const [selectedRefresh, setSelectedRefresh] = useState("");
+  const [selectedOrder, setSelectedOrder] = useState("");
+  const [selectedLanguages, setSelectedLanguages] = useState([]);
+
+  useEffect(() => {
+    let query;
+    if (selectedOrder) {
+      query = `?order_by=${selectedOrder}`;
+      if (selectedLanguages.length > 0) {
+        query = `?languages=${selectedLanguages.join(",")}`;
+      }
+    } else if (selectedLanguages.length > 0) {
+      query = `?languages=${selectedLanguages.join(",")}`;
+    }
+    console.log("query", query);
+
+    if (selectedRefresh) {
+      // setInterval(() => {
+      //   onFilterClick(query)
+      // })
+    } else {
+      // clearInterval()
+      onFilterClick(query);
+    }
+  }, [selectedOrder, selectedLanguages, selectedRefresh]);
 
   return (
     <div className="dropDown">
@@ -24,46 +47,24 @@ export default function DropDown({ refresh, order, language }) {
         </div>
         {isRefreshActive && (
           <div className="dropDown-menu-list">
-            <label className="dropDown-menu-list-item">
-              <input
-                type="checkbox"
-                value={10000}
-                onChange={(e) => {
-                  setSelectedRefresh("10 seconds");
-                }}
-              />
-              10 seconds
-            </label>
-            <label className="dropDown-menu-list-item">
-              <input
-                type="checkbox"
-                value={30000}
-                onChange={(e) => {
-                  setSelectedRefresh("30 seconds");
-                }}
-              />
-              30 seconds
-            </label>
-            <label className="dropDown-menu-list-item">
-              <input
-                type="checkbox"
-                value={60000}
-                onChange={(e) => {
-                  setSelectedRefresh("1 minute");
-                }}
-              />
-              1 minute
-            </label>
-            <label className="dropDown-menu-list-item">
-              <input
-                type="checkbox"
-                value={100000}
-                onChange={(e) => {
-                  setSelectedRefresh("10 minute");
-                }}
-              />
-              10 minutes
-            </label>
+            {refreshIntervals.map((refresh) => {
+              return (
+                <label className="dropDown-menu-list-item" key={refresh.value}>
+                  <input
+                    type="checkbox"
+                    checked={selectedRefresh === refresh.value}
+                    onChange={(e) => {
+                      if (selectedRefresh === refresh.value) {
+                        setSelectedRefresh("");
+                      } else {
+                        setSelectedRefresh(refresh.value);
+                      }
+                    }}
+                  />
+                  {refresh.title}
+                </label>
+              );
+            })}
           </div>
         )}
       </div>
@@ -81,42 +82,24 @@ export default function DropDown({ refresh, order, language }) {
         </div>
         {isOrderActive && (
           <div className="dropDown-menu-list">
-            <label className="dropDown-menu-list-item">
-              <input
-                type="checkbox"
-                onChange={(e) => {
-                  setSelectedOrder("Top Rated");
-                }}
-              />
-              Top Rated
-            </label>
-            <label className="dropDown-menu-list-item">
-              <input
-                type="checkbox"
-                onChange={(e) => {
-                  setSelectedOrder("Latest");
-                }}
-              />
-              Latest
-            </label>
-            <label className="dropDown-menu-list-item">
-              <input
-                type="checkbox"
-                onChange={(e) => {
-                  setSelectedOrder("Most Read");
-                }}
-              />
-              Most Read
-            </label>
-            <label className="dropDown-menu-list-item">
-              <input
-                type="checkbox"
-                onChange={(e) => {
-                  setSelectedOrder("Popular");
-                }}
-              />
-              Popular
-            </label>
+            {orderFilters.map((order) => {
+              return (
+                <label className="dropDown-menu-list-item" key={order.value}>
+                  <input
+                    type="checkbox"
+                    checked={selectedOrder === order.value}
+                    onChange={(e) => {
+                      if (selectedOrder === order.value) {
+                        setSelectedOrder("");
+                      } else {
+                        setSelectedOrder(order.value);
+                      }
+                    }}
+                  />
+                  {order.title}
+                </label>
+              );
+            })}
           </div>
         )}
       </div>
@@ -129,7 +112,7 @@ export default function DropDown({ refresh, order, language }) {
             setIsLangActive(!isLangActive);
           }}
         >
-          {selectedLanguage}
+          {selectedLanguages}
           <i className="fa fa-chevron-down"></i>
         </div>
         {isLangActive && (
@@ -137,53 +120,53 @@ export default function DropDown({ refresh, order, language }) {
             <label className="dropDown-menu-list-item">
               <input
                 type="checkbox"
+                checked={selectedLanguages.length === languages.length}
                 onChange={(e) => {
-                  setSelectedLanguage("Select/Unselect All");
+                  if (selectedLanguages.length === languages.length) {
+                    setSelectedLanguages([]);
+                  } else {
+                    const allLang = languages.map((lg) => lg.value);
+                    setSelectedLanguages(allLang);
+                  }
                 }}
               />
-              Select / Unselect All
+              Select/Unselect All
             </label>
-            <label className="dropDown-menu-list-item">
-              <input
-                type="checkbox"
-                onChange={(e) => {
-                  setSelectedLanguage("English");
-                }}
-              />
-              English
-            </label>
-            <label className="dropDown-menu-list-item">
-              <input
-                type="checkbox"
-                onChange={(e) => {
-                  setSelectedLanguage("German");
-                }}
-              />
-              German
-            </label>
-            <label className="dropDown-menu-list-item">
-              <input
-                type="checkbox"
-                onChange={(e) => {
-                  setSelectedLanguage("Chinese");
-                }}
-              />
-              Chinese
-            </label>
-            <label className="dropDown-menu-list-item">
-              <input
-                type="checkbox"
-                onChange={(e) => {
-                  setSelectedLanguage("Italian");
-                }}
-              />
-              Italian
-            </label>
+            {languages.map((lang) => {
+              return (
+                <label className="dropDown-menu-list-item" key={lang.value}>
+                  <input
+                    type="checkbox"
+                    checked={selectedLanguages.includes(lang.value)}
+                    onChange={(e) => {
+                      const lgIndex = selectedLanguages.indexOf(lang.value);
+                      if (lgIndex === -1) {
+                        setSelectedLanguages([...selectedLanguages, lang.value]);
+                      } else {
+                        const updatedLangs = [...selectedLanguages];
+                        updatedLangs.splice(lgIndex, 1);
+                        setSelectedLanguages(updatedLangs);
+                      }
+                    }}
+                  />
+                  {lang.title}
+                </label>
+              );
+            })}
           </div>
         )}
       </div>
 
-      <button className="dropDown-resetBtn">RESET</button>
+      <button
+        className="dropDown-resetBtn"
+        onClick={() => {
+          setSelectedOrder("");
+          setSelectedLanguages([]);
+          setSelectedRefresh("");
+        }}
+      >
+        RESET
+      </button>
     </div>
   );
 }

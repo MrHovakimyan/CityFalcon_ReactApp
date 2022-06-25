@@ -8,8 +8,9 @@ import FetchData from "./api/FetchData";
 function App() {
   const [stories, setStories] = useState([]);
 
-  const getStoriesData = async () => {
-    const data = await FetchData();
+  const getStoriesData = async (query) => {
+    const data = await FetchData(query);
+    console.log("data: ", data);
     setStories(data);
   };
 
@@ -17,12 +18,10 @@ function App() {
     getStoriesData();
   }, []);
 
-  const handleFilterClick = () => {};
-
   return (
     <div className="App">
       <Header />
-      <Filters onRefreshClick={getStoriesData} onFilterClick={handleFilterClick} />
+      <Filters onRefreshClick={getStoriesData} onFilterClick={getStoriesData} />
       <StoriesList storiesData={stories} />
     </div>
   );

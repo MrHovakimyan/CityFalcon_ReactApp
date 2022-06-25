@@ -1,8 +1,9 @@
 import { BASE_URL } from "./configs";
 
-async function FetchData() {
+async function FetchData(query) {
+  const url = query ? BASE_URL + query : BASE_URL;
   try {
-    return fetch(BASE_URL)
+    return fetch(url)
       .then((response) => response.json())
       .then((result) => {
         return result.stories;
