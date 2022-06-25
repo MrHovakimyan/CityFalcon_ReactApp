@@ -70,6 +70,7 @@
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
+    border: 1px solid var(--white-two);
 
     &-thumbs {
       width: 40px;
