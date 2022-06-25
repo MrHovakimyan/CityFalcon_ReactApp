@@ -7,8 +7,13 @@ export default function DropDown({ onFilterClick }) {
   const [isLangActive, setIsLangActive] = useState(false);
 
   const [selectedRefresh, setSelectedRefresh] = useState("");
+  const [selectedRefreshTitle, setSelectedRefreshTitle] = useState("Refresh Intervals");
+
   const [selectedOrder, setSelectedOrder] = useState("");
+  const [selectedOrderTitle, setSelectedOrderTitle] = useState("Select Order");
+
   const [selectedLanguages, setSelectedLanguages] = useState([]);
+  const [selectedLanguagesTitle, setSelectedLanguagesTitle] = useState("Select Language");
 
   useEffect(() => {
     let query;
@@ -42,9 +47,10 @@ export default function DropDown({ onFilterClick }) {
             setIsRefreshActive(!isRefreshActive);
           }}
         >
-          {selectedRefresh}
+          {selectedRefreshTitle}
           <i className="fa fa-chevron-down"></i>
         </div>
+
         {isRefreshActive && (
           <div className="dropDown-menu-list">
             {refreshIntervals.map((refresh) => {
@@ -56,8 +62,10 @@ export default function DropDown({ onFilterClick }) {
                     onChange={(e) => {
                       if (selectedRefresh === refresh.value) {
                         setSelectedRefresh("");
+                        setSelectedRefreshTitle("Refresh Intervals");
                       } else {
                         setSelectedRefresh(refresh.value);
+                        setSelectedRefreshTitle(refresh.title);
                       }
                     }}
                   />
@@ -77,9 +85,10 @@ export default function DropDown({ onFilterClick }) {
             setIsOrderActive(!isOrderActive);
           }}
         >
-          {selectedOrder}
+          {selectedOrderTitle}
           <i className="fa fa-chevron-down"></i>
         </div>
+
         {isOrderActive && (
           <div className="dropDown-menu-list">
             {orderFilters.map((order) => {
@@ -91,8 +100,10 @@ export default function DropDown({ onFilterClick }) {
                     onChange={(e) => {
                       if (selectedOrder === order.value) {
                         setSelectedOrder("");
+                        setSelectedOrderTitle("Select Order");
                       } else {
                         setSelectedOrder(order.value);
+                        setSelectedOrderTitle(order.title);
                       }
                     }}
                   />
@@ -112,9 +123,10 @@ export default function DropDown({ onFilterClick }) {
             setIsLangActive(!isLangActive);
           }}
         >
-          {selectedLanguages}
+          {selectedLanguagesTitle}
           <i className="fa fa-chevron-down"></i>
         </div>
+
         {isLangActive && (
           <div className="dropDown-menu-list">
             <label className="dropDown-menu-list-item">
@@ -124,8 +136,11 @@ export default function DropDown({ onFilterClick }) {
                 onChange={(e) => {
                   if (selectedLanguages.length === languages.length) {
                     setSelectedLanguages([]);
+                    setSelectedLanguagesTitle("Select Language");
                   } else {
                     const allLang = languages.map((lg) => lg.value);
+                    const filteredLang = languages.map((lg) => lg.title);
+                    setSelectedLanguagesTitle(...filteredLang);
                     setSelectedLanguages(allLang);
                   }
                 }}
@@ -161,8 +176,13 @@ export default function DropDown({ onFilterClick }) {
         className="dropDown-resetBtn"
         onClick={() => {
           setSelectedOrder("");
+          setSelectedOrderTitle("Select Order");
+
           setSelectedLanguages([]);
+          setSelectedLanguagesTitle("Select Language");
+
           setSelectedRefresh("");
+          setSelectedRefreshTitle("Refresh intervals");
         }}
       >
         RESET
