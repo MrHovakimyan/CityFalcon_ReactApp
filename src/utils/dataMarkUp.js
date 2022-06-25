@@ -13,6 +13,8 @@ export default function DataMarkUp({ data }) {
           {data.title}
         </a>
         {showDescription && <div className="dataMarkUp-description">{data.description}</div>}
+
+        {/* Domain name and published time */}
         <div className="dataMarkUp-domainInfo">
           <img src={data.domain_cached_logo_url} alt="Logo" className="dataMarkUp-img"></img>
           <div className="dataMarkUp-domainNameTime">{data.domain_name}</div>
@@ -20,6 +22,8 @@ export default function DataMarkUp({ data }) {
             {new Date(data.publishTime).getUTCHours() + "h"}
           </div>
         </div>
+
+        {/* Like / Dislike / Bookmark */}
         {showDescription && (
           <div className="dataMarkUp-info-bookmark">
             {
@@ -49,6 +53,8 @@ export default function DataMarkUp({ data }) {
           </div>
         )}
       </div>
+
+      {/* Score and button for opening description */}
       <div className="dataMarkUp-score-wrpr">
         <div className="dataMarkUp-score-wrpr-score">{data.score + "%"}</div>
         <button
@@ -57,7 +63,15 @@ export default function DataMarkUp({ data }) {
             setShowDescription(!showDescription);
           }}
         >
-          {showDescription ? <>^</> : <>v</>}
+          {showDescription ? (
+            <>
+              <i className="fa fa-chevron-up"></i>
+            </>
+          ) : (
+            <>
+              <i className="fa fa-chevron-down"></i>
+            </>
+          )}
         </button>
       </div>
     </div>

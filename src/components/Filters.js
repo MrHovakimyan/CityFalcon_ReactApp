@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import refreshIcon from "../media/refreshIcon.png";
 import filterIcon from "../media/filterIcon.png";
+import DropDown from "../utils/DropDown";
 
-export default function Filters({ onRefreshClick, onFilterClick }) {
+export default function Filters({ onRefreshClick, onFilterClick, refresh, order, language }) {
   const [isFilterOn, setIsFilterOn] = useState(false);
 
   return (
@@ -25,33 +26,7 @@ export default function Filters({ onRefreshClick, onFilterClick }) {
       </div>
       {isFilterOn && (
         <div className="filters-content-options">
-          <form>
-            <label for="autoRefresh">AUTOREFRESH</label>
-            <select name="AutoRefresh" id="autoRefresh">
-              <option value="1min">1 Minute</option>
-              <option value="1min">15 Minute</option>
-              <option value="1min">20 Minute</option>
-            </select>
-          </form>
-          <form>
-            <label for="topRated">TOP RATED</label>
-            <select name="TopRated" id="topRated">
-              <option value="1min">Top</option>
-              <option value="1min">Latest</option>
-              <option value="1min">Retweeted</option>
-              <option value="1min">Read</option>
-            </select>
-          </form>
-          <form>
-            <label for="allLanguages">ALL LANGUAGES</label>
-            <select name="allLanguages" id="allLanguages">
-              <option value="1min">English</option>
-              <option value="1min">German</option>
-              <option value="1min">Italian</option>
-              <option value="1min">Chinese</option>
-            </select>
-          </form>
-          <button className="filters-content-resetBtn">RESET</button>
+          <DropDown refresh={refresh} order={order} language={language} />
         </div>
       )}
     </div>
