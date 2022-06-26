@@ -1,10 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import refreshIcon from "../media/refreshIcon.png";
 import filterIcon from "../media/filterIcon.png";
 import DropDown from "../utils/DropDown";
 
 export default function Filters({ onRefreshClick, onFilterClick }) {
-  const [isFilterOn, setIsFilterOn] = useState(false);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const filterBtnRef = useRef();
+
+  useEffect(() => {
+    const closeFilterBtn = (e) => {
+      if (e.path[0] !== filterBtnRef.current) {
+        setIsFilterOpen(false);
+      }
+    };
+    document.body.addEventListener("click", closeFilterBtn);
+
+    return () => document.body.removeEventListener("click", closeFilterBtn);
+  }, []);
 
   return (
     <div className="filters-content">
@@ -15,16 +27,17 @@ export default function Filters({ onRefreshClick, onFilterClick }) {
           Refresh
         </button>
         <button
+          ref={filterBtnRef}
           className="filters-content-btns-wrpr"
           onClick={() => {
-            setIsFilterOn(!isFilterOn);
+            setIsFilterOpen(!isFilterOpen);
           }}
         >
           <img src={filterIcon} alt="Refresh" className="filters-content-btns-wrpr-icon" />
           Filters
         </button>
       </div>
-      {isFilterOn && (
+      {isFilterOpen && (
         <div className="filters-content-options">
           <DropDown onFilterClick={onFilterClick} />
         </div>

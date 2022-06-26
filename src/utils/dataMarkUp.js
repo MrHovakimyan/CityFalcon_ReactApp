@@ -28,7 +28,7 @@ export default function DataMarkUp({ data }) {
           )}
 
           {/* Domain name and published time */}
-          <div className="dataMarkUp-domainInfo">
+          <div className="dataMarkUp-info-text-domainInfo">
             <img src={data.domain_cached_logo_url} alt="Logo" className="dataMarkUp-img"></img>
             <div className="dataMarkUp-domainNameTime">{data.domain_name}</div>
             <div className="dataMarkUp-domainNameTime">
@@ -40,7 +40,7 @@ export default function DataMarkUp({ data }) {
         {/* Score and button for opening description */}
         <div className="dataMarkUp-info-score-wrpr">
           <div
-            className={`dataMarkUp-score-wrpr-score dataMarkUp-info-score-wrpr-score-${scoreColor}`}
+            className={`dataMarkUp-info-score-wrpr-score dataMarkUp-info-score-wrpr-score-${scoreColor}`}
           >
             {data.score + "%"}
           </div>
