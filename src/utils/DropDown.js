@@ -13,7 +13,8 @@ export default function DropDown({ onFilterClick }) {
   const [selectedOrderTitle, setSelectedOrderTitle] = useState("Select Order");
 
   const [selectedLanguages, setSelectedLanguages] = useState([]);
-  const [selectedLanguagesTitle, setSelectedLanguagesTitle] = useState("Select Language");
+
+  const [refreshId, setRefreshId] = useState(null);
 
   useEffect(() => {
     let query;
@@ -28,17 +29,39 @@ export default function DropDown({ onFilterClick }) {
     console.log("query", query);
 
     if (selectedRefresh) {
-      // setInterval(() => {
-      //   onFilterClick(query)
-      // })
+      let id = setInterval(() => {
+        onFilterClick(query);
+      }, selectedRefresh);
+      setRefreshId(id);
     } else {
-      // clearInterval()
+      if (refreshId) {
+        clearInterval(refreshId);
+        setRefreshId(null);
+      }
       onFilterClick(query);
     }
   }, [selectedOrder, selectedLanguages, selectedRefresh]);
 
+  // Setting Language Title
+  let selectedLanguagesTitle = "";
+  if (selectedLanguages.length === 0) {
+    selectedLanguagesTitle = "Select Language";
+  } else if (selectedLanguages.length === languages.length) {
+    selectedLanguagesTitle = "All Selected";
+  } else {
+    selectedLanguagesTitle = languages
+      .filter((lg) => selectedLanguages.includes(lg.value))
+      .map((lg) => lg.title)
+      .join("|");
+  }
+
   return (
-    <div className="dropDown">
+    <div
+      className="dropDown"
+      onClick={(e) => {
+        e.stopPropagation();
+      }}
+    >
       {/*AutoRefresh */}
       <div className="dropDown-menu">
         <div
@@ -136,17 +159,15 @@ export default function DropDown({ onFilterClick }) {
                 onChange={(e) => {
                   if (selectedLanguages.length === languages.length) {
                     setSelectedLanguages([]);
-                    setSelectedLanguagesTitle("Select Language");
                   } else {
                     const allLang = languages.map((lg) => lg.value);
-                    const filteredLang = languages.map((lg) => lg.title);
-                    setSelectedLanguagesTitle(...filteredLang);
                     setSelectedLanguages(allLang);
                   }
                 }}
               />
               Select/Unselect All
             </label>
+
             {languages.map((lang) => {
               return (
                 <label className="dropDown-menu-list-item" key={lang.value}>
@@ -156,7 +177,8 @@ export default function DropDown({ onFilterClick }) {
                     onChange={(e) => {
                       const lgIndex = selectedLanguages.indexOf(lang.value);
                       if (lgIndex === -1) {
-                        setSelectedLanguages([...selectedLanguages, lang.value]);
+                        const updatedLangs = [...selectedLanguages, lang.value];
+                        setSelectedLanguages(updatedLangs);
                       } else {
                         const updatedLangs = [...selectedLanguages];
                         updatedLangs.splice(lgIndex, 1);
@@ -179,7 +201,6 @@ export default function DropDown({ onFilterClick }) {
           setSelectedOrderTitle("Select Order");
 
           setSelectedLanguages([]);
-          setSelectedLanguagesTitle("Select Language");
 
           setSelectedRefresh("");
           setSelectedRefreshTitle("Refresh intervals");
