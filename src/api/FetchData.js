@@ -6,7 +6,7 @@ async function FetchData(query) {
     return fetch(url)
       .then((response) => response.json())
       .then((result) => {
-        return result.stories;
+        return result;
       });
   } catch (error) {
     console.log(error);

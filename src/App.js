@@ -7,27 +7,52 @@ import FetchData from "./api/FetchData";
 
 function App() {
   const [stories, setStories] = useState([]);
+  const [query, setQuery] = useState();
+  const [pageToken, setPageToken] = useState();
 
   const getStoriesData = async (query) => {
-    const data = await FetchData(query);
-    console.log("data: ", data);
+    const { stories, next_page_token } = await FetchData(query);
+    setPageToken(next_page_token);
+    return stories;
+  };
+
+  const handleScrollDown = async () => {
+    let newQuery;
+    if (query) {
+      newQuery = `${query}&limit=20&page_token=${pageToken}`;
+    } else {
+      newQuery = `?limit=20&page_token=${pageToken}`;
+    }
+    const data = await getStoriesData(newQuery);
+    setStories([...stories, ...data]);
+  };
+
+  const handleFilterClick = async (query) => {
+    setQuery(query);
+    const data = await getStoriesData(query);
     setStories(data);
   };
 
-  const handleScrollDown = () => {};
+  const handleRefreshClick = async () => {
+    const data = await getStoriesData(query);
+    setStories(data);
+  };
 
   useEffect(() => {
-    getStoriesData();
+    const fetchStoriesData = async () => {
+      const data = await getStoriesData();
+      setStories(data);
+    };
+    fetchStoriesData();
   }, []);
 
   return (
     <div className="App">
       <Header />
       <Filters
-        onRefreshClick={() => {
-          getStoriesData();
-        }}
-        onFilterClick={getStoriesData}
+        onRefreshClick={handleRefreshClick}
+        onFilterClick={handleFilterClick}
+        query={query}
       />
       <StoriesList storiesData={stories} onScrollDown={handleScrollDown} />
     </div>

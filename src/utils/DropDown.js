@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { orderFilters, languages, refreshIntervals } from "./Constants";
+import queryConvert from "../utils/queryConvert";
 
-export default function DropDown({ onFilterClick }) {
+export default function DropDown({ onFilterClick, query }) {
   const [isRefreshActive, setIsRefreshActive] = useState(false);
   const [isOrderActive, setIsOrderActive] = useState(false);
   const [isLangActive, setIsLangActive] = useState(false);
@@ -17,6 +18,18 @@ export default function DropDown({ onFilterClick }) {
   const [refreshId, setRefreshId] = useState(null);
 
   useEffect(() => {
+    const queryParams = queryConvert(query);
+    if (queryParams) {
+      if (queryParams.order_by) {
+        setSelectedOrder(queryParams.order_by);
+      }
+      if (queryParams.languages) {
+        setSelectedLanguages(queryParams.languages.split(","));
+      }
+    }
+  }, [query]);
+
+  useEffect(() => {
     let query;
     if (selectedOrder) {
       query = `?order_by=${selectedOrder}`;
@@ -26,7 +39,6 @@ export default function DropDown({ onFilterClick }) {
     } else if (selectedLanguages.length > 0) {
       query = `?languages=${selectedLanguages.join(",")}`;
     }
-    console.log("query", query);
 
     if (selectedRefresh) {
       let id = setInterval(() => {

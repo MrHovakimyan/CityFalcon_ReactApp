@@ -8,9 +8,8 @@ export default function StoriesList({ storiesData, onScrollDown }) {
     if (storiesListRef.current) {
       const { scrollTop, scrollHeight, clientHeight } = storiesListRef.current;
       if (scrollTop + clientHeight === scrollHeight) {
-        // TO SOMETHING HERE
         onScrollDown();
-        console.log("Reached Bottom");
+        storiesListRef.current.scrollTop = 0;
       }
     }
   };

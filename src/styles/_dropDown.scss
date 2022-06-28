@@ -62,6 +62,9 @@
         line-height: normal;
         letter-spacing: normal;
         cursor: pointer;
+        & > input {
+          margin-right: 5px;
+        }
       }
     }
   }

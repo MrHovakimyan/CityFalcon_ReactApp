@@ -3,7 +3,7 @@ import refreshIcon from "../media/refreshIcon.png";
 import filterIcon from "../media/filterIcon.png";
 import DropDown from "../utils/DropDown";
 
-export default function Filters({ onRefreshClick, onFilterClick }) {
+export default function Filters({ onRefreshClick, onFilterClick, query }) {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const filterBtnRef = useRef();
 
@@ -39,7 +39,7 @@ export default function Filters({ onRefreshClick, onFilterClick }) {
       </div>
       {isFilterOpen && (
         <div className="filters-content-options">
-          <DropDown onFilterClick={onFilterClick} />
+          <DropDown onFilterClick={onFilterClick} query={query} />
         </div>
       )}
     </div>
