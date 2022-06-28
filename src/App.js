@@ -14,6 +14,8 @@ function App() {
     setStories(data);
   };
 
+  const handleScrollDown = () => {};
+
   useEffect(() => {
     getStoriesData();
   }, []);
@@ -21,8 +23,13 @@ function App() {
   return (
     <div className="App">
       <Header />
-      <Filters onRefreshClick={getStoriesData} onFilterClick={getStoriesData} />
-      <StoriesList storiesData={stories} />
+      <Filters
+        onRefreshClick={() => {
+          getStoriesData();
+        }}
+        onFilterClick={getStoriesData}
+      />
+      <StoriesList storiesData={stories} onScrollDown={handleScrollDown} />
     </div>
   );
 }
