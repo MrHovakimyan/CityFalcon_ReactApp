@@ -17,9 +17,6 @@ Features that are planned to develop in the future:
 
 ---
 
-![Getting Started](./src/media/Demo_photo.png)
-
-
 ### Stories behaviour
 - By clicking on the story title, the URL opens in a new tab.
 - By clicking on the arrow down, the story expands and a block with curation tools appear: bookmark, like, dislike.
